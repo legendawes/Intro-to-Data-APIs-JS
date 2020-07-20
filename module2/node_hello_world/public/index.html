@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <title>This is the title of the webpage!</title>
+  </head>
+  <body>
+    <script>
+        if ('geolocation' in navigator) {
+            console.log('geo available');
+            navigator.geolocation.getCurrentPosition(position => {
+                console.log(position.coords);
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                document.getElementById('latitude').textContent = lat;
+                document.getElementById('longtitude').textContent = lon;
+            });
+        } else {
+            console.log('geo not available');
+        }
+    </script>
+    <p>
+        latitude: <span id='latitude'></span><br>
+        longtitude: <span id='longtitude'></span><br>
+    </p>
+
+  </body>
+</html>
