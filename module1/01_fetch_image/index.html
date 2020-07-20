@@ -8,23 +8,28 @@
   </head>
   <body>
     <h1>Fetch a Rainbow</h1>
-    <img src="" id="rainbow" width="480" />
     <script>
-      console.log('about to fetch a rainbow');
-
-      catchRainbow()
+      console.log('about to fetch a few rainbows');
+      const rainbows = ['rainbow.jpg', 'second_rainbow.jpg']
+      
+      for (const rainbow of rainbows) {
+        catchRainbow(rainbow)
         .then(response => {
-          console.log('yay');
+          console.log(`loaded ${rainbow}`);
         })
         .catch(error => {
-          console.log('error!');
+          console.log('error!', rainbow);
           console.error(error);
         });
+      }
 
-      async function catchRainbow() {
-        const response = await fetch('rainbow.jpg');
+      async function catchRainbow(path) {
+        const response = await fetch(path);
         const blob = await response.blob();
-        document.getElementById('rainbow').src = URL.createObjectURL(blob);
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(blob);
+        img.width = '400';
+        document.body.append(img);
       }
     </script>
   </body>
