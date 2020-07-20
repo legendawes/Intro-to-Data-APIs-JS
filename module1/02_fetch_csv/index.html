@@ -32,11 +32,31 @@
                 borderColor: 'rgba(255, 99, 132, 1)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
                 borderWidth: 1
+              },
+              {
+                label: 'Northern Hemisphere Temperature in °C',
+                data: globalTemps.north_temps,
+                fill: false,
+                borderColor: 'rgba(31, 119, 180, 1)',
+                backgroundColor: 'rgba(31, 119, 180, 0.5)',
+                borderWidth: 1
+              },
+              {
+                label: 'Southern Hemisphere Temperature in °C',
+                data: globalTemps.south_temps,
+                fill: false,
+                borderColor: 'rgba(103, 191, 92, 1)',
+                backgroundColor: 'rgba(103, 191, 92, 0.5)',
+                borderWidth: 1
               }
             ]
           },
           options: {}
         });
+      }
+      
+      function parseTemp(temp) {
+        return 14 + parseFloat(temp)
       }
 
       async function getData() {
@@ -45,13 +65,17 @@
         const data = await response.text();
         const years = [];
         const temps = [];
+        const north_temps = [];
+        const south_temps = [];
         const rows = data.split('\n').slice(1);
         rows.forEach(row => {
           const cols = row.split(',');
           years.push(cols[0]);
-          temps.push(14 + parseFloat(cols[1]));
+          temps.push(parseTemp(cols[1]));
+          north_temps.push(parseTemp(cols[2]));
+          south_temps.push(parseTemp(cols[3]));
         });
-        return { years, temps };
+        return {years, temps, north_temps, south_temps};
       }
     </script>
   </body>
